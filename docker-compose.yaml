@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./html:/usr/share/nginx/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql:/var/lib/mysql
